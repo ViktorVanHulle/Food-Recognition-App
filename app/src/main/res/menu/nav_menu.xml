@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/user"
+        android:title="Profile"
+        >
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/gearcon"
+                android:title="Settings"/>
+
+            <item
+                android:id="@+id/nav_notify"
+                android:icon="@drawable/bellcon"
+                android:title="Notifications"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/logout"
+        android:title="Logout"/>
+
+    <item
+        android:id="@+id/nav_communication"
+        android:title="Communication"
+        >
+
+        <menu>
+            <item
+                android:id="@+id/nav_report"
+                android:icon="@drawable/ic_baseline_report_problem_24"
+                android:title="Report problem"
+                />
+        </menu>
+
+    </item>
+
+
+
+
+</menu>
