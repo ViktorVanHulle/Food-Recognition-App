@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
@@ -13,6 +13,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -80,6 +81,7 @@ class DashboardActivity : AppCompatActivity() {
 
         dashboard_layout.startAnimation(fade_in)
 
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -88,8 +90,11 @@ class DashboardActivity : AppCompatActivity() {
         if(requestCode==101){
             //bitmap containing the picture
             val bitmap = data?.extras?.get("data") as Bitmap
-//            imageView.setImageBitmap(bitmap)
-
+            //create intent and pass bitmap
+            val intent = Intent(this, ViewActivity::class.java)
+            intent.putExtra("BitmapImage", bitmap);
+            //start viewActivity
+            startActivity(intent)
         }
     }
 
