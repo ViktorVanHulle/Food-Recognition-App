@@ -21,11 +21,14 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        /*
         name = findViewById(R.id.registerNameInput)
         email = findViewById(R.id.registerEmailInput)
         password = findViewById(R.id.registerPasswordInput)
         registerButton = findViewById(R.id.registerButton)
         auth = Firebase.auth
+
+         */
 
         registerButton.setOnClickListener {
             auth.createUserWithEmailAndPassword(email.text.toString(), password.text.toString()).addOnCompleteListener(this) { task ->
