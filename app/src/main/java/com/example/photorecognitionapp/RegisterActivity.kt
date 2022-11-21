@@ -11,10 +11,13 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
+    /*
     lateinit var name: EditText
     lateinit var email: EditText
     lateinit var password: EditText
     lateinit var registerButton: Button
+
+     */
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +31,6 @@ class RegisterActivity : AppCompatActivity() {
         registerButton = findViewById(R.id.registerButton)
         auth = Firebase.auth
 
-         */
 
         registerButton.setOnClickListener {
             auth.createUserWithEmailAndPassword(email.text.toString(), password.text.toString()).addOnCompleteListener(this) { task ->
@@ -41,5 +43,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+
+         */
     }
 }
