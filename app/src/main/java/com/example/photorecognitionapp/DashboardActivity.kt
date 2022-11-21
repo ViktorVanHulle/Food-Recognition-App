@@ -37,6 +37,9 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        val userId = intent.getStringExtra("userId")
+
+        // getUserData(userId)
 
         //get by id
         fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in)
