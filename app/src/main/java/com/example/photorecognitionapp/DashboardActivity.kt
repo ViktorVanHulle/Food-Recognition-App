@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.photorecognitionapp.firestore.CloudData
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 
@@ -28,6 +29,7 @@ class DashboardActivity : AppCompatActivity() {
     lateinit var btn_camera:MaterialButton
     lateinit var dashboard_layout:ConstraintLayout
     lateinit var userId: String
+    var cloudData = CloudData()
 
     //hamburger menu
     lateinit var toggle:ActionBarDrawerToggle
@@ -39,6 +41,7 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard)
 
         userId = intent.getStringExtra("userId").toString()
+        //cloudData = intent.getParcelableExtra<CloudData>("cloudData")!!
 
         //get by id
         fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in)
@@ -96,6 +99,7 @@ class DashboardActivity : AppCompatActivity() {
             val intent = Intent(this, FoodActivity::class.java)
             intent.putExtra("BitmapImage", bitmap)
             intent.putExtra("userId", userId)
+            intent.putExtra("cloudData", cloudData)
             //start viewActivity
             startActivity(intent)
         }

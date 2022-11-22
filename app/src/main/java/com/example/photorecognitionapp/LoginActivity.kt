@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
                     val userid = user?.uid
 
                     val intent = Intent(this,DashboardActivity::class.java)
-                    intent.putExtra("userid", userid)
+                    intent.putExtra("userId", userid)
 
                     startActivity(intent)
                 } else {

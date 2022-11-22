@@ -8,11 +8,13 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.util.concurrent.CountDownLatch
 
 class CmApi {
-    private val apiKey = "secret"
+
+    private var secretKey = Keys
+    private val apiKey = secretKey.apiKey()
     private var mealItem: MealItem? = null
-    private var onRequestCompleteListener : OnRequestCompleteListener? = null
 
     fun getImageData(byteArr: ByteArray): MealItem? {
         val MEDIA_TYPE_JPEG = "image/jpeg".toMediaType()
@@ -21,7 +23,10 @@ class CmApi {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart(
-                "image", "image.jpeg", RequestBody.create("image/*jpeg".toMediaTypeOrNull(), byteArr))
+                "image",
+                "image.jpeg",
+                RequestBody.create("image/*jpeg".toMediaTypeOrNull(), byteArr)
+            )
             .build()
 
         val request = Request.Builder()
@@ -29,17 +34,18 @@ class CmApi {
             .post(requestBody)
             .build()
 
+        var countDownLatch = CountDownLatch(1)
+
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                countDownLatch.countDown()
                 e.printStackTrace()
             }
 
             override fun onResponse(call: Call, response: Response) {
                 response.use {
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                    for ((name, value) in response.headers) {
-                        println("$name: $value")
+                    if (!response.isSuccessful) {
+                        throw IOException("Unexpected code $response")
                     }
                     if (response.code != 200) {
                         println("Failed request")
@@ -51,35 +57,21 @@ class CmApi {
                         if (!mUser.isFood!!) {
                             println("isFood: " + mUser.isFood)
                         } else {
-                            //User input in grams
-                            val userInput = 100
                             mealItem = MealItem(mUser.results[0].items[0].name,
                                 mUser.results[0].items[0].nutrition!!.calories!! * 0.001,
                                 mUser.results[0].items[0].nutrition!!.totalFat!! * 1000 * 0.001,
                                 mUser.results[0].items[0].nutrition!!.totalCarbs!! * 1000 * 0.001,
                                 mUser.results[0].items[0].nutrition!!.protein!! * 1000 * 0.001
                                 )
-                            return mealItem
-                            /*
-                            println(mUser.results[0].items[0].name)
-                            println(mUser.results[0].items[0].nutrition!!.calories!! * 0.001 * userInput)
-                            println(mUser.results[0].items[0].nutrition!!.totalFat!! * 1000 * 0.001 * userInput)
-                            println(mUser.results[0].items[0].nutrition!!.totalCarbs!! * 1000 * 0.001 * userInput)
-                            println(mUser.results[0].items[0].nutrition!!.protein!! * 1000 * 0.001 * userInput)
-                             */
                         }
-                        onRequestCompleteListener?.onSuccess(mealItem)
                     }
                 }
+                countDownLatch.countDown()
             }
         })
+        countDownLatch.await()
+        return mealItem
     }
-}
-
-
-interface OnRequestCompleteListener{
-    fun onSuccess(mealItem: MealItem?)
-    fun onError()
 }
 
 // Rescale bitmap to 544x544
