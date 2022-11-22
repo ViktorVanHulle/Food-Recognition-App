@@ -27,6 +27,7 @@ class DashboardActivity : AppCompatActivity() {
     lateinit var fade_in : Animation
     lateinit var btn_camera:MaterialButton
     lateinit var dashboard_layout:ConstraintLayout
+    lateinit var userId: String
 
     //hamburger menu
     lateinit var toggle:ActionBarDrawerToggle
@@ -37,10 +38,7 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        val userId = intent.getStringExtra("userId")
-
-
-        // getUserData(userId)
+        userId = intent.getStringExtra("userId").toString()
 
         //get by id
         fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in)
@@ -95,8 +93,9 @@ class DashboardActivity : AppCompatActivity() {
             //bitmap containing the picture
             val bitmap = data?.extras?.get("data") as Bitmap
             //create intent and pass bitmap
-            val intent = Intent(this, ViewActivity::class.java)
-            intent.putExtra("BitmapImage", bitmap);
+            val intent = Intent(this, FoodActivity::class.java)
+            intent.putExtra("BitmapImage", bitmap)
+            intent.putExtra("userId", userId)
             //start viewActivity
             startActivity(intent)
         }

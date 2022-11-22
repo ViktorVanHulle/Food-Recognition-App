@@ -1,11 +1,9 @@
 package com.example.photorecognitionapp
 
-import android.content.ClipData
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.example.photorecognitionapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -30,31 +28,5 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-
-
-
-        binding.bottomNavigationView.setOnItemReselectedListener {
-
-            when(it.itemId){
-
-                R.id.login -> replaceFragment(Login())
-                R.id.register -> replaceFragment(Register())
-
-                else ->{
-
-                }
-            }
-            true
-        }
     }
-
-    private fun replaceFragment(fragment: Fragment){
-
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, fragment)
-        fragmentTransaction.commit()
-    }
-
-
 }
