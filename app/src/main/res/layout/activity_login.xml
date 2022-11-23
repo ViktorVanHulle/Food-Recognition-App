@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
+
+    <!-- Email area -->
     <EditText
         android:id="@+id/editTextEmailAddress"
-        android:layout_width="237dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="104dp"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="105dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/edittextbackground"
         android:ems="10"
@@ -23,12 +25,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Password area -->
     <EditText
         android:id="@+id/editTextPassword"
-        android:layout_width="237dp"
-        android:layout_height="49dp"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="41dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/edittextbackground"
         android:ems="10"
         android:hint="Password"
@@ -39,6 +42,7 @@
         app:layout_constraintStart_toStartOf="@+id/editTextEmailAddress"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress" />
 
+    <!-- Login button -->
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
@@ -65,6 +69,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin">
 
+        <!-- Text area -->
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"

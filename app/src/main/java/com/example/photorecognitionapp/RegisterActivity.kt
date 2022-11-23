@@ -37,14 +37,14 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("sign up", "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.makeText(baseContext, "Please enter a valid email.",
                         Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
     fun goToLogin(view: View){
-        val intent= Intent(this,LoginActivity::class.java)
+        val intent = Intent(this,LoginActivity::class.java)
         startActivity(intent)
     }
 }

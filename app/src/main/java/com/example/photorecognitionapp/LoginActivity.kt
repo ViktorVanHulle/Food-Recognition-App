@@ -26,8 +26,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun login(view: View){
-        val email=emailLogin.text.toString()
-        val password=passwordLogin.text.toString()
+        val email = emailLogin.text.toString()
+        val password = passwordLogin.text.toString()
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -43,14 +43,14 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("sign in", "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.makeText(baseContext, "Please enter a valid account.",
                         Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
     fun goToRegister(view: View){
-        val intent= Intent(this,RegisterActivity::class.java)
+        val intent = Intent(this,RegisterActivity::class.java)
         startActivity(intent)
     }
 }
