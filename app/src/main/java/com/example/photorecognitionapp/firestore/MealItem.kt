@@ -5,5 +5,7 @@ data class MealItem(
     var calories: Double? = 0.0,
     var fat: Double? = 0.0,
     var protein: Double? = 0.0,
-    var carbohydrates: Double? = 0.0
+    var carbohydrates: Double? = 0.0,
+    var intakeQuan: Double? = 0.0,
+    var date: String = ""
 )

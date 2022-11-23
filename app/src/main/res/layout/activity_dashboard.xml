@@ -57,7 +57,7 @@
                     app:trackThickness="18dp" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/calTot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="295.5"
@@ -82,7 +82,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/circularProgressIndicator"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="@+id/circularProgressIndicator"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toBottomOf="@+id/calTot" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -112,7 +112,7 @@
                     app:trackThickness="8dp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/proteinTot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="19.5"
@@ -129,8 +129,8 @@
                     android:layout_marginStart="4dp"
                     android:text="of 97"
                     android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-                    app:layout_constraintStart_toEndOf="@+id/textView4" />
+                    app:layout_constraintBaseline_toBaselineOf="@+id/proteinTot"
+                    app:layout_constraintStart_toEndOf="@+id/proteinTot" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -159,7 +159,7 @@
                     app:trackThickness="8dp" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/fatTot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="7.5"
@@ -176,8 +176,8 @@
                     android:layout_marginStart="4dp"
                     android:text="of 28.7"
                     android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView6"
-                    app:layout_constraintStart_toEndOf="@+id/textView6" />
+                    app:layout_constraintBaseline_toBaselineOf="@+id/fatTot"
+                    app:layout_constraintStart_toEndOf="@+id/fatTot" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -204,7 +204,7 @@
                     app:trackThickness="8dp" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/carbsTot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="37.7"
@@ -220,8 +220,8 @@
                     android:layout_marginStart="4dp"
                     android:text="of 161.6"
                     android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-                    app:layout_constraintStart_toEndOf="@+id/textView8" />
+                    app:layout_constraintBaseline_toBaselineOf="@+id/carbsTot"
+                    app:layout_constraintStart_toEndOf="@+id/carbsTot" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

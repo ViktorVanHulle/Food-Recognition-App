@@ -1,7 +1,10 @@
 package com.example.photorecognitionapp.foodrecognitionapi
 
 import android.graphics.Bitmap
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.photorecognitionapp.firestore.MealItem
+import com.example.photorecognitionapp.firestore.getDate
 import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
@@ -42,6 +45,7 @@ class CmApi {
                 e.printStackTrace()
             }
 
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (!response.isSuccessful) {
@@ -50,18 +54,20 @@ class CmApi {
                     if (response.code != 200) {
                         println("Failed request")
                     } else {
-                        val tempIdk = response.body!!.string()
+                        val respData = response.body!!.string()
                         val gson = Gson()
-                        val mUser = gson.fromJson(tempIdk, JsonData.JsonDataMain::class.java)
+                        val mItem = gson.fromJson(respData, JsonData.JsonDataMain::class.java)
 
-                        if (!mUser.isFood!!) {
-                            println("isFood: " + mUser.isFood)
+                        if (!mItem.isFood!!) {
+                            println("isFood: " + mItem.isFood)
                         } else {
-                            mealItem = MealItem(mUser.results[0].items[0].name,
-                                mUser.results[0].items[0].nutrition!!.calories!! * 0.001,
-                                mUser.results[0].items[0].nutrition!!.totalFat!! * 1000 * 0.001,
-                                mUser.results[0].items[0].nutrition!!.totalCarbs!! * 1000 * 0.001,
-                                mUser.results[0].items[0].nutrition!!.protein!! * 1000 * 0.001
+                            mealItem = MealItem(mItem.results[0].items[0].name,
+                                mItem.results[0].items[0].nutrition!!.calories!! * 0.001,
+                                mItem.results[0].items[0].nutrition!!.totalFat!! * 1000 * 0.001,
+                                mItem.results[0].items[0].nutrition!!.protein!! * 1000 * 0.001,
+                                mItem.results[0].items[0].nutrition!!.totalCarbs!! * 1000 * 0.001,
+                                0.0,
+                                getDate()
                                 )
                         }
                     }
