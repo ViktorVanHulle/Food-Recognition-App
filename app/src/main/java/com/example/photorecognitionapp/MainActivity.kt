@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var login: View
     lateinit var register: View
 
+    // Function to make the buttons on the first page to work
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

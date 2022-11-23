@@ -6,11 +6,12 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".RegisterActivity">
 
-<EditText
+    <!-- Email area -->
+    <EditText
     android:id="@+id/editTextEmailAddress"
-    android:layout_width="237dp"
-    android:layout_height="49dp"
-    android:layout_marginTop="104dp"
+    android:layout_width="240dp"
+    android:layout_height="50dp"
+    android:layout_marginTop="105dp"
     android:layout_marginBottom="12dp"
     android:background="@drawable/edittextbackground"
     android:ems="10"
@@ -24,67 +25,87 @@ tools:context=".RegisterActivity">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-<EditText
-    android:id="@+id/editTextPassword"
-    android:layout_width="237dp"
-    android:layout_height="49dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="41dp"
-    android:background="@drawable/edittextbackground"
-    android:ems="10"
-    android:hint="Password"
-    android:inputType="textPassword"
-    android:padding="10dp"
-    android:textColor="@color/black"
-    app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
-    app:layout_constraintStart_toStartOf="@+id/editTextEmailAddress"
-    app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress" />
-
-<Button
-    android:id="@+id/buttonRegister"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:layout_marginBottom="10dp"
-    android:text="REGISTER"
-    android:onClick="register"
-    android:textColor="@color/white"
-    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
-
-<LinearLayout
-    android:id="@+id/linearLayout"
-    android:layout_width="366dp"
-    android:layout_height="56dp"
-    android:layout_marginBottom="170dp"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.488"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/buttonRegister">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="60dp"
-        android:layout_weight="1"
-        android:text="Do you have an account?"
+    <!-- Password area -->
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/edittextbackground"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+        app:layout_constraintStart_toStartOf="@+id/editTextEmailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress" />
 
+    <!-- Password warning message -->
     <TextView
-        android:id="@+id/textViewLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2.6"
-        android:text="Login"
-        android:onClick="goToLogin"
+        android:id="@+id/textViewPassword"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_weight="10"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:text="Password must be at least 6 characters"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-</LinearLayout>
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+        app:layout_constraintStart_toStartOf="@+id/editTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"/>
+
+    <!-- Login button -->
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="REGISTER"
+        android:onClick="register"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="366dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="170dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRegister">
+
+        <!-- Text area -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_weight="1"
+            android:text="Do you have an account?"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.6"
+            android:text="Login"
+            android:onClick="goToLogin"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
