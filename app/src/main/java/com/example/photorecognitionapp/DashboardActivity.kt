@@ -25,6 +25,8 @@ import com.example.photorecognitionapp.firestore.MealItem
 import com.example.photorecognitionapp.firestore.getDate
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
@@ -35,6 +37,7 @@ class DashboardActivity : AppCompatActivity() {
     lateinit var btn_camera:MaterialButton
     lateinit var dashboard_layout:ConstraintLayout
     lateinit var userId: String
+
     var cloudData = CloudData()
     private val db = Firebase.firestore
     private var list = arrayListOf<MealItem>()
@@ -51,6 +54,24 @@ class DashboardActivity : AppCompatActivity() {
     lateinit var fatDaily: TextView
     lateinit var carbsDaily: TextView
 
+    //daily count progress fields
+    lateinit var circularProgressIndicator: CircularProgressIndicator
+    lateinit var linearProgressIndicator_protein: LinearProgressIndicator
+    lateinit var linearProgressIndicator_fats: LinearProgressIndicator
+    lateinit var linearProgressIndicator_carbs: LinearProgressIndicator
+
+
+    //TEMPORARY TOTAL FIELDS
+    var CALORIES = 2000;
+    var PROTEIN = 80;
+    var FATS = 20;
+    var CARBS = 120;
+    //daily count total fields
+    lateinit var cal_dailyTotal: TextView
+    lateinit var protein_dailyTotal: TextView
+    lateinit var fats_dailyTotal: TextView
+    lateinit var carbs_dailyTotal: TextView
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +85,19 @@ class DashboardActivity : AppCompatActivity() {
         proteinDaily = findViewById(R.id.proteinTot)
         fatDaily = findViewById(R.id.fatTot)
         carbsDaily = findViewById(R.id.carbsTot)
+
+        //Get daily intake from firebase and set progress on dashboard
+        circularProgressIndicator = findViewById(R.id.circularProgressIndicator)
+        linearProgressIndicator_protein = findViewById(R.id.linearProgressIndicator)
+        linearProgressIndicator_fats = findViewById(R.id.linearProgressIndicator2)
+        linearProgressIndicator_carbs = findViewById(R.id.linearProgressIndicator3)
+
+        //Set total daily intake textfields
+        cal_dailyTotal = findViewById(R.id.cal_dailyTotal)
+        protein_dailyTotal = findViewById(R.id.protein_dailyTotal)
+        fats_dailyTotal = findViewById(R.id.fats_dailyTotal)
+        carbs_dailyTotal = findViewById(R.id.carbs_dailyTotal)
+
 
         val df = DecimalFormat("#.##")
         db.collection(userId).get().addOnSuccessListener { documents ->
@@ -83,10 +117,24 @@ class DashboardActivity : AppCompatActivity() {
 
                 }
             }
+            //set progress -> for now total = 2000 cal; 80g protein; 20g fats; 120g carbs;
+            var progressPerc = 10;
+            circularProgressIndicator.progress = caloriesTot.toInt() / (CALORIES/progressPerc) // 100.0 -> 100%
+            linearProgressIndicator_protein.progress = proteinTot.toInt() / (PROTEIN/progressPerc) // 100.0 -> 100%
+            linearProgressIndicator_fats.progress = fatTot.toInt() / (FATS/progressPerc) // 100.0 -> 100%
+            linearProgressIndicator_carbs.progress = carbsTot.toInt() / (CARBS/progressPerc) // 100.0 -> 100%
+
+            //set textfields
+            //daily nutrients amount already eaten
             caloriesDaily.text = df.format(caloriesTot).toString()
             proteinDaily.text = df.format(proteinTot).toString()
             fatDaily.text = df.format(fatTot).toString()
             carbsDaily.text = df.format(carbsTot).toString()
+            //daily nutrients amount total
+            cal_dailyTotal.text = "of " + CALORIES.toString() + " kcal"
+            protein_dailyTotal.text = "of " + PROTEIN.toString()
+            fats_dailyTotal.text = "of " + FATS.toString()
+            carbs_dailyTotal.text = "of " + CARBS.toString()
 
 
             // TODO: Display items from list in app
