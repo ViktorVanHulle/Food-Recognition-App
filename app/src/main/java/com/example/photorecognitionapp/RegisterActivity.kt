@@ -16,7 +16,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var emailRegister: EditText
     private lateinit var passwordRegister: EditText
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)

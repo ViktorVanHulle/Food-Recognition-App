@@ -37,6 +37,8 @@ class DashboardActivity : AppCompatActivity() {
     lateinit var userId: String
     var cloudData = CloudData()
     private val db = Firebase.firestore
+    private var list = arrayListOf<MealItem>()
+
 
     //hamburger menu
     lateinit var toggle:ActionBarDrawerToggle
@@ -62,28 +64,34 @@ class DashboardActivity : AppCompatActivity() {
         proteinDaily = findViewById(R.id.proteinTot)
         fatDaily = findViewById(R.id.fatTot)
         carbsDaily = findViewById(R.id.carbsTot)
+
         val df = DecimalFormat("#.##")
-        if(userId != null) {
-            db.collection(userId).get().addOnSuccessListener { documents ->
-                var proteinTot = 0.0
-                var caloriesTot = 0.0
-                var fatTot = 0.0
-                var carbsTot = 0.0
-                var intakeQuan = 0.0
-                for (document in documents) {
-                    if(document.get("date") == getDate()) {
-                        intakeQuan = document.get("intakeQuan").toString().toDouble()
-                        proteinTot += document.get("protein").toString().toDouble() * intakeQuan
-                        caloriesTot += document.get("calories").toString().toDouble() * intakeQuan
-                        fatTot += document.get("fat").toString().toDouble() * intakeQuan
-                        carbsTot += document.get("carbohydrates").toString().toDouble() * intakeQuan
-                    }
+        db.collection(userId).get().addOnSuccessListener { documents ->
+            var proteinTot = 0.0
+            var caloriesTot = 0.0
+            var fatTot = 0.0
+            var carbsTot = 0.0
+            var intakeQuan = 0.0
+            for (document in documents) {
+                if(document.get("date") == getDate()) {
+                    intakeQuan = document.get("intakeQuan").toString().toDouble()
+                    proteinTot += document.get("protein").toString().toDouble() * intakeQuan
+                    caloriesTot += document.get("calories").toString().toDouble() * intakeQuan
+                    fatTot += document.get("fat").toString().toDouble() * intakeQuan
+                    carbsTot += document.get("carbohydrates").toString().toDouble() * intakeQuan
+                    list.add(document.toObject(MealItem::class.java))
+
                 }
-                caloriesDaily.setText(df.format(caloriesTot).toString())
-                proteinDaily.setText(df.format(proteinTot).toString())
-                fatDaily.setText(df.format(fatTot).toString())
-                carbsDaily.setText(df.format(carbsTot).toString())
             }
+            caloriesDaily.text = df.format(caloriesTot).toString()
+            proteinDaily.text = df.format(proteinTot).toString()
+            fatDaily.text = df.format(fatTot).toString()
+            carbsDaily.text = df.format(carbsTot).toString()
+
+
+            // TODO: Display items from list in app
+            println("******************************************")
+            println(list)
         }
 
         //get by id

@@ -29,13 +29,13 @@ class ViewActivity : AppCompatActivity() {
         clickListener()
     }
 
-    public fun clickListener(){
-        var imageVegetable = findViewById<CardView>(R.id.ivVegetable)
-        var imageFruit = findViewById<CardView>(R.id.ivFruit)
-        var imageFish = findViewById<CardView>(R.id.ivFish)
-        var imageMeat = findViewById<CardView>(R.id.ivMeat)
-        var imageDairy = findViewById<CardView>(R.id.ivDairy)
-        var imageBakery = findViewById<CardView>(R.id.ivBakery)
+    private fun clickListener(){
+        val imageVegetable = findViewById<CardView>(R.id.ivVegetable)
+        val imageFruit = findViewById<CardView>(R.id.ivFruit)
+        val imageFish = findViewById<CardView>(R.id.ivFish)
+        val imageMeat = findViewById<CardView>(R.id.ivMeat)
+        val imageDairy = findViewById<CardView>(R.id.ivDairy)
+        val imageBakery = findViewById<CardView>(R.id.ivBakery)
 
         imageVegetable.setOnClickListener {
             openCategoryActivity("Vegetable");
@@ -55,11 +55,9 @@ class ViewActivity : AppCompatActivity() {
         imageBakery.setOnClickListener {
             openCategoryActivity("Bakery");
         }
-
-
     }
 
-    public fun openCategoryActivity(category:String){
+    private fun openCategoryActivity(category:String){
         //set category clicked
         //create intent and pass the category
         val intent = Intent(this, FoodActivity::class.java)
@@ -67,5 +65,4 @@ class ViewActivity : AppCompatActivity() {
         //start viewActivity
         startActivity(intent)
     }
-
 }

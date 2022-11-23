@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        title="Login"
+        title = "Login"
         auth = Firebase.auth
         emailLogin = findViewById(R.id.editTextEmailAddress)
         passwordLogin = findViewById(R.id.editTextPassword)

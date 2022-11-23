@@ -14,12 +14,15 @@ import com.example.photorecognitionapp.firestore.CloudData
 import com.example.photorecognitionapp.foodrecognitionapi.CmApi
 import com.example.photorecognitionapp.foodrecognitionapi.btmRescale
 import com.example.photorecognitionapp.foodrecognitionapi.btmpToByteArr
+import java.text.DecimalFormat
 
 class FoodActivity : AppCompatActivity() {
     lateinit var img: Bitmap
     lateinit var userId: String
     lateinit var imgView: ImageView
     lateinit var protein: TextView
+    lateinit var fat: TextView
+    lateinit var carbs: TextView
     lateinit var itemQuan: EditText
     lateinit var foodName: TextView
     lateinit var addFoodButton: Button
@@ -32,6 +35,8 @@ class FoodActivity : AppCompatActivity() {
 
         imgView = findViewById(R.id.ivFood)
         protein = findViewById(R.id.proteinCount)
+        fat = findViewById(R.id.fatCount)
+        carbs = findViewById(R.id.carbsCount)
         itemQuan = findViewById(R.id.itemQuanEt)
         foodName = findViewById(R.id.txFoodName)
         addFoodButton = findViewById(R.id.addFoodBtn)
@@ -47,7 +52,17 @@ class FoodActivity : AppCompatActivity() {
         val cmApi = CmApi()
         val mealItem = cmApi.getImageData(btmpToByteArr(rescaledImg))
 
-        foodName.setText(mealItem?.name.toString())
+        val protein100 = mealItem?.protein?.times(100)
+        val fat100 = mealItem?.fat?.times(100)
+        val carbs100 = mealItem?.carbohydrates?.times(100)
+
+
+        val df = DecimalFormat("#.##")
+        foodName.text = mealItem?.name.toString()
+        protein.text = df.format(protein100).toString()
+        fat.text = df.format(fat100).toString()
+        carbs.text = df.format(carbs100).toString()
+
 
         addFoodButton.setOnClickListener {
             // Add to cloud storage
