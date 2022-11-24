@@ -1,10 +1,10 @@
 package com.example.photorecognitionapp
 
 import android.Manifest
-import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,7 +13,6 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,10 +29,11 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
-import java.util.*
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -42,6 +42,8 @@ class DashboardActivity : AppCompatActivity() {
     lateinit var dashboard_layout:ConstraintLayout
     lateinit var userId: String
 
+    //firebase
+    lateinit var auth: FirebaseAuth
     var cloudData = CloudData()
     private val db = Firebase.firestore
     private var list = arrayListOf<MealItem>()
@@ -67,12 +69,6 @@ class DashboardActivity : AppCompatActivity() {
     //list of foods
     lateinit var rv_listOfFoods: RecyclerView
 
-    //TEMPORARY TOTAL FIELDS
-    //var CALORIES = 2000.0;
-    //var PROTEIN = 80.0;
-    //var FATS = 20.0;
-    //var CARBS = 120.0;
-    //daily count total fields
     lateinit var cal_dailyTotal: TextView
     lateinit var protein_dailyTotal: TextView
     lateinit var fats_dailyTotal: TextView
@@ -83,29 +79,27 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        auth = Firebase.auth
         // Get userId from intent
         userId = intent.getStringExtra("userId").toString()
-
         // Get daily intake from firebase and set textfields
         caloriesDaily = findViewById(R.id.calTot)
         proteinDaily = findViewById(R.id.proteinTot)
         fatDaily = findViewById(R.id.fatTot)
         carbsDaily = findViewById(R.id.carbsTot)
-
         //Get daily intake from firebase and set progress on dashboard
         circularProgressIndicator = findViewById(R.id.circularProgressIndicator)
         linearProgressIndicator_protein = findViewById(R.id.linearProgressIndicator)
         linearProgressIndicator_fats = findViewById(R.id.linearProgressIndicator2)
         linearProgressIndicator_carbs = findViewById(R.id.linearProgressIndicator3)
-
         //Set total daily intake textfields
         cal_dailyTotal = findViewById(R.id.cal_dailyTotal)
         protein_dailyTotal = findViewById(R.id.protein_dailyTotal)
         fats_dailyTotal = findViewById(R.id.fats_dailyTotal)
         carbs_dailyTotal = findViewById(R.id.carbs_dailyTotal)
-
         //set list of food by id
         rv_listOfFoods = findViewById(R.id.rv_listOfFoods)
+
 
 
         val df = DecimalFormat("#.##")
@@ -199,22 +193,25 @@ class DashboardActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_settings ->    {
-                    val intent = Intent(this, SettingsActivity::class.java)
-                    intent.putExtra("userId", userId)
-                    intent.putExtra("cloudData", cloudData)
-                    startActivity(intent)
-                    true
+                    openSettings()
                 }
                 R.id.nav_report -> {
-                    Toast.makeText(applicationContext, "Clicked Report problem", Toast.LENGTH_SHORT).show()
+                    reportProblem()
                 }
                 R.id.nav_logout -> {
-                    Toast.makeText(applicationContext, "Clicked Logout", Toast.LENGTH_SHORT).show()
-
+                    logout()
                 }
             }
             true
         }
+
+        //set the username as userId
+        var username = navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text
+        if(username != null){
+            navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text = userId
+        }
+
+
 
         if(ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
@@ -227,6 +224,34 @@ class DashboardActivity : AppCompatActivity() {
             startActivityForResult(intent, 101)
         })
         dashboard_layout.startAnimation(fade_in)
+    }
+
+    private fun openSettings() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        intent.putExtra("userId", userId)
+        intent.putExtra("cloudData", cloudData)
+        startActivity(intent)
+    }
+
+    private fun logout() {
+        auth.signOut()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    //Reporting a problem by sending an email
+    private fun reportProblem() {
+
+        var email: String = "viktov@stud.ntnu.no"
+        var subject: String = "Reporting for app " + getString(R.string.app_name)
+
+        val intent = Intent(Intent.ACTION_SENDTO)
+        intent.setData(Uri.parse("mailto:"))
+        intent.putExtra(Intent.EXTRA_EMAIL, email)
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        intent.putExtra(Intent.EXTRA_TEXT, "")
+
+        startActivity(Intent.createChooser(intent, "Choose an email client:"))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

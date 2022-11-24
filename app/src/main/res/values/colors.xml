@@ -11,4 +11,6 @@
     <color name="cherry_light">#2FE91E63</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary">#3F51B5</color>
+    <color name="secondary">#A83F51B5</color>
 </resources>

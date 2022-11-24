@@ -18,18 +18,18 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/user_name"
         android:paddingTop="8dp"
         android:textSize="20dp"
-        android:text="[USERNAME]"
-        android:textColor="@color/black"
+        android:text="MENU"
+        android:letterSpacing="0.1"
+        android:textColor="@color/primary"
         android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16dp"
-        android:text="[EMAIL]"
         />
     
     <View
