@@ -68,10 +68,10 @@ class DashboardActivity : AppCompatActivity() {
     lateinit var rv_listOfFoods: RecyclerView
 
     //TEMPORARY TOTAL FIELDS
-    var CALORIES = 2000.0;
-    var PROTEIN = 80.0;
-    var FATS = 20.0;
-    var CARBS = 120.0;
+    //var CALORIES = 2000.0;
+    //var PROTEIN = 80.0;
+    //var FATS = 20.0;
+    //var CARBS = 120.0;
     //daily count total fields
     lateinit var cal_dailyTotal: TextView
     lateinit var protein_dailyTotal: TextView
@@ -127,27 +127,48 @@ class DashboardActivity : AppCompatActivity() {
                 }
             }
 
-            //set progress -> for now total = 2000 cal; 80g protein; 20g fats; 120g carbs;
-            var progressCal_cal = df.format(caloriesTot).toDouble() / CALORIES
-            var progressCal_prot = df.format(proteinTot).toDouble() / PROTEIN
-            var progressCal_fats = df.format(fatTot).toDouble() / FATS
-            var progressCal_carbs = df.format(carbsTot).toDouble() / CARBS
-            circularProgressIndicator.progress = if(progressCal_cal > 1) 100 else (progressCal_cal * 100.0).toInt() // 100.0 -> 100%
-            linearProgressIndicator_protein.progress = if(progressCal_prot > 1) 100 else (progressCal_prot * 100.0).toInt()   // 100.0 -> 100%
-            linearProgressIndicator_fats.progress = if(progressCal_fats > 1) 100 else (progressCal_fats * 100.0).toInt()   // 100.0 -> 100%
-            linearProgressIndicator_carbs.progress = if(progressCal_carbs > 1) 100 else (progressCal_carbs * 100.0).toInt()   // 100.0 -> 100%
+            db.collection(userId).document("userSettings").get().addOnSuccessListener { document ->
 
-            //set textfields
-            //daily nutrients amount already eaten
-            caloriesDaily.text = df.format(caloriesTot).toString()
-            proteinDaily.text = df.format(proteinTot).toString()
-            fatDaily.text = df.format(fatTot).toString()
-            carbsDaily.text = df.format(carbsTot).toString()
-            //daily nutrients amount total
-            cal_dailyTotal.text = "of " + CALORIES.toString() + " kcal"
-            protein_dailyTotal.text = "of " + PROTEIN.toString()
-            fats_dailyTotal.text = "of " + FATS.toString()
-            carbs_dailyTotal.text = "of " + CARBS.toString()
+                var CALORIES: Int
+                var PROTEIN: Int
+                var FATS: Int
+                var CARBS: Int
+                if(document.exists()) {
+                    CALORIES = document.get("caloriesGoal").toString().toInt()
+                    PROTEIN = document.get("proteinGoal").toString().toInt()
+                    FATS = document.get("fatGoal").toString().toInt()
+                    CARBS = document.get("carbsGoal").toString().toInt()
+                } else {
+                    CALORIES = 2000
+                    PROTEIN = 50
+                    FATS = 66
+                    CARBS = 215
+                }
+
+                //set progress -> for now total = 2000 cal; 80g protein; 20g fats; 120g carbs;
+                var progressCal_cal = df.format(caloriesTot).toDouble() / CALORIES
+                var progressCal_prot = df.format(proteinTot).toDouble() / PROTEIN
+                var progressCal_fats = df.format(fatTot).toDouble() / FATS
+                var progressCal_carbs = df.format(carbsTot).toDouble() / CARBS
+                circularProgressIndicator.progress = if(progressCal_cal > 1) 100 else (progressCal_cal * 100.0).toInt() // 100.0 -> 100%
+                linearProgressIndicator_protein.progress = if(progressCal_prot > 1) 100 else (progressCal_prot * 100.0).toInt()   // 100.0 -> 100%
+                linearProgressIndicator_fats.progress = if(progressCal_fats > 1) 100 else (progressCal_fats * 100.0).toInt()   // 100.0 -> 100%
+                linearProgressIndicator_carbs.progress = if(progressCal_carbs > 1) 100 else (progressCal_carbs * 100.0).toInt()   // 100.0 -> 100%
+
+                //set textfields
+                //daily nutrients amount already eaten
+                caloriesDaily.text = df.format(caloriesTot).toString()
+                proteinDaily.text = df.format(proteinTot).toString()
+                fatDaily.text = df.format(fatTot).toString()
+                carbsDaily.text = df.format(carbsTot).toString()
+                //daily nutrients amount total
+                cal_dailyTotal.text = "of " + CALORIES.toString() + " kcal"
+                protein_dailyTotal.text = "of " + PROTEIN.toString()
+                fats_dailyTotal.text = "of " + FATS.toString()
+                carbs_dailyTotal.text = "of " + CARBS.toString()
+            }
+
+
 
             //RECYCLERVIEW
             //rv config
@@ -172,17 +193,25 @@ class DashboardActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        navView.bringToFront()
 
         //Functionality of navigation item clicked
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_settings ->    {
                     val intent = Intent(this, SettingsActivity::class.java)
+                    intent.putExtra("userId", userId)
+                    intent.putExtra("cloudData", cloudData)
                     startActivity(intent)
                     true
                 }
-                R.id.nav_report -> Toast.makeText(applicationContext, "Clicked Report problem", Toast.LENGTH_SHORT).show()
-                R.id.nav_logout -> Toast.makeText(applicationContext, "Clicked Logout", Toast.LENGTH_SHORT).show()
+                R.id.nav_report -> {
+                    Toast.makeText(applicationContext, "Clicked Report problem", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_logout -> {
+                    Toast.makeText(applicationContext, "Clicked Logout", Toast.LENGTH_SHORT).show()
+
+                }
             }
             true
         }
