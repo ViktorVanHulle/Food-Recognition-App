@@ -18,10 +18,16 @@ class CloudData(): Parcelable {
     constructor(parcel: Parcel) : this() {
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun addMeal(userId: String, mealItem: MealItem) {
         mealArr.mealList.add(mealItem)
         db.collection(userId).add(mealItem)
+            .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
+    }
+
+
+    fun addUserSettings(userId: String, userSettings: UserSettings) {
+        db.collection(userId).document("userSettings").set(userSettings)
             .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
     }
