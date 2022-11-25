@@ -48,7 +48,6 @@ class DashboardActivity : AppCompatActivity() {
     private val db = Firebase.firestore
     private var list = arrayListOf<MealItem>()
 
-
     //hamburger menu
     lateinit var toggle:ActionBarDrawerToggle
     lateinit var drawerLayout: DrawerLayout
@@ -230,6 +229,7 @@ class DashboardActivity : AppCompatActivity() {
         dashboard_layout.startAnimation(fade_in)
     }
 
+    // Function to open settings activity
     private fun openSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         intent.putExtra("userId", userId)
@@ -237,6 +237,7 @@ class DashboardActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // Function to log out of the application
     private fun logout() {
         auth.signOut()
         val intent = Intent(this, MainActivity::class.java)
@@ -250,7 +251,7 @@ class DashboardActivity : AppCompatActivity() {
         val subject: String = "Reporting for app " + getString(R.string.app_name)
 
         val intent = Intent(Intent.ACTION_SENDTO)
-        intent.setData(Uri.parse("mailto:"))
+        intent.data = Uri.parse("mailto:")
         intent.putExtra(Intent.EXTRA_EMAIL, email)
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
         intent.putExtra(Intent.EXTRA_TEXT, "")
