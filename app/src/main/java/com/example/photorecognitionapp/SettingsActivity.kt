@@ -43,10 +43,8 @@ class SettingsActivity : AppCompatActivity()  {
 
     private fun clickListener(){
 
-        val btn_setCalories = findViewById<Button>(R.id.btn_setCalories)
-        val btn_setProtein = findViewById<Button>(R.id.btn_setProtein)
-        val btn_setFats = findViewById<Button>(R.id.btn_setFats)
-        val btn_setCarbs = findViewById<Button>(R.id.btn_setCarbs)
+        val btn_setNutrients = findViewById<Button>(R.id.btn_setNutrients)
+
 
         var userSettings = UserSettings()
 
@@ -69,19 +67,10 @@ class SettingsActivity : AppCompatActivity()  {
             amount_protein.setText(userSettings.proteinGoal.toString())
         }
 
-        btn_setCalories.setOnClickListener {
+        btn_setNutrients.setOnClickListener {
             userSettings.caloriesGoal = amount_calories.text.toString().toInt()
-            cloudData.addUserSettings(userId, userSettings)
-        }
-        btn_setProtein.setOnClickListener {
             userSettings.proteinGoal = amount_protein.text.toString().toInt()
-            cloudData.addUserSettings(userId, userSettings)
-        }
-        btn_setFats.setOnClickListener {
             userSettings.fatGoal = amount_fats.text.toString().toInt()
-            cloudData.addUserSettings(userId, userSettings)
-        }
-        btn_setCarbs.setOnClickListener {
             userSettings.carbsGoal = amount_carbs.text.toString().toInt()
             cloudData.addUserSettings(userId, userSettings)
         }
