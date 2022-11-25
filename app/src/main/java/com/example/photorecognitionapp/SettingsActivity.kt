@@ -48,7 +48,7 @@ class SettingsActivity : AppCompatActivity()  {
         val btn_setFats = findViewById<Button>(R.id.btn_setFats)
         val btn_setCarbs = findViewById<Button>(R.id.btn_setCarbs)
 
-        var userSettings = UserSettings()
+        val userSettings = UserSettings()
 
         db.collection(userId).document("userSettings").get().addOnSuccessListener { document ->
             if(document.exists()) {
