@@ -7,7 +7,6 @@ import com.example.photorecognitionapp.firestore.MealItem
 import com.example.photorecognitionapp.firestore.getDate
 import com.google.gson.Gson
 import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -20,7 +19,6 @@ class CmApi {
     private var mealItem: MealItem? = null
 
     fun getImageData(byteArr: ByteArray): MealItem? {
-        val MEDIA_TYPE_JPEG = "image/jpeg".toMediaType()
         val client = OkHttpClient()
 
         val requestBody = MultipartBody.Builder()
@@ -37,7 +35,7 @@ class CmApi {
             .post(requestBody)
             .build()
 
-        var countDownLatch = CountDownLatch(1)
+        val countDownLatch = CountDownLatch(1)
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {

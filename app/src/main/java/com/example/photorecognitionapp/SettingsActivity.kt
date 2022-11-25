@@ -46,7 +46,7 @@ class SettingsActivity : AppCompatActivity()  {
         val btn_setNutrients = findViewById<Button>(R.id.btn_setNutrients)
 
 
-        var userSettings = UserSettings()
+        val userSettings = UserSettings()
 
         db.collection(userId).document("userSettings").get().addOnSuccessListener { document ->
             if(document.exists()) {
