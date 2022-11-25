@@ -123,10 +123,10 @@ class DashboardActivity : AppCompatActivity() {
 
             db.collection(userId).document("userSettings").get().addOnSuccessListener { document ->
 
-                var CALORIES: Int
-                var PROTEIN: Int
-                var FATS: Int
-                var CARBS: Int
+                val CALORIES: Int
+                val PROTEIN: Int
+                val FATS: Int
+                val CARBS: Int
                 if(document.exists()) {
                     CALORIES = document.get("caloriesGoal").toString().toInt()
                     PROTEIN = document.get("proteinGoal").toString().toInt()
@@ -140,10 +140,10 @@ class DashboardActivity : AppCompatActivity() {
                 }
 
                 //set progress -> for now total = 2000 cal; 80g protein; 20g fats; 120g carbs;
-                var progressCal_cal = df.format(caloriesTot).toDouble() / CALORIES
-                var progressCal_prot = df.format(proteinTot).toDouble() / PROTEIN
-                var progressCal_fats = df.format(fatTot).toDouble() / FATS
-                var progressCal_carbs = df.format(carbsTot).toDouble() / CARBS
+                val progressCal_cal = df.format(caloriesTot).toDouble() / CALORIES
+                val progressCal_prot = df.format(proteinTot).toDouble() / PROTEIN
+                val progressCal_fats = df.format(fatTot).toDouble() / FATS
+                val progressCal_carbs = df.format(carbsTot).toDouble() / CARBS
                 circularProgressIndicator.progress = if(progressCal_cal > 1) 100 else (progressCal_cal * 100.0).toInt() // 100.0 -> 100%
                 linearProgressIndicator_protein.progress = if(progressCal_prot > 1) 100 else (progressCal_prot * 100.0).toInt()   // 100.0 -> 100%
                 linearProgressIndicator_fats.progress = if(progressCal_fats > 1) 100 else (progressCal_fats * 100.0).toInt()   // 100.0 -> 100%
@@ -168,8 +168,8 @@ class DashboardActivity : AppCompatActivity() {
             //rv config
             rv_listOfFoods.setNestedScrollingEnabled(false);
             //layout manager & adapter
-            var layoutManager = LinearLayoutManager(this)
-            var adapter = DashboardAdapter(list)
+            val layoutManager = LinearLayoutManager(this)
+            val adapter = DashboardAdapter(list)
             rv_listOfFoods.layoutManager = layoutManager
             rv_listOfFoods.adapter = adapter
         }
@@ -206,7 +206,7 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         //set the username as userId
-        var username = navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text
+        val username = navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text
         if(username != null){
             navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text = auth.currentUser!!.email
         }
@@ -242,8 +242,8 @@ class DashboardActivity : AppCompatActivity() {
     //Reporting a problem by sending an email
     private fun reportProblem() {
 
-        var email: String = "viktov@stud.ntnu.no"
-        var subject: String = "Reporting for app " + getString(R.string.app_name)
+        val email: String = "viktov@stud.ntnu.no"
+        val subject: String = "Reporting for app " + getString(R.string.app_name)
 
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.setData(Uri.parse("mailto:"))
