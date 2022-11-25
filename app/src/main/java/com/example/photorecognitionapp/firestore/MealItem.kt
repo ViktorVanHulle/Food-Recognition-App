@@ -1,5 +1,6 @@
 package com.example.photorecognitionapp.firestore
 
+// Data class representing a MealItem
 data class MealItem(
     var name: String? = "",
     var calories: Double? = 0.0,

@@ -2,6 +2,7 @@ package com.example.photorecognitionapp.foodrecognitionapi
 
 import com.google.gson.annotations.SerializedName
 
+// Temporary data classes created using an online Json to Kotlin converter tool
 class JsonData {
     data class JsonDataMain (
         @SerializedName("is_food"       ) var isFood       : Boolean?           = null,

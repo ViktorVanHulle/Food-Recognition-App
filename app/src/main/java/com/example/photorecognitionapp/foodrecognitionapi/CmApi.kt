@@ -13,14 +13,18 @@ import java.io.IOException
 import java.util.concurrent.CountDownLatch
 
 class CmApi {
-
+    // Initialize api key and a MealItem
     private var secretKey = Keys
     private val apiKey = secretKey.apiKey()
     private var mealItem: MealItem? = null
 
+    /* Constructs a http request with attached image as bytearray given,
+    and sends the request to Calorie Mama API. Returns a MealItem object
+     */
     fun getImageData(byteArr: ByteArray): MealItem? {
         val client = OkHttpClient()
 
+        // Create request body
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart(
@@ -30,19 +34,23 @@ class CmApi {
             )
             .build()
 
+        // build request
         val request = Request.Builder()
             .url("https://api-2445582032290.production.gw.apicast.io/v1/foodrecognition?user_key=$apiKey")
             .post(requestBody)
             .build()
 
+        // Creates a counter used to ensure execution of request
         val countDownLatch = CountDownLatch(1)
 
+        // Execute request asynchronous.
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 countDownLatch.countDown()
                 e.printStackTrace()
             }
 
+            // On response of the request, parse data with gson into temporary object and get desired data to change the MealItem object.
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call, response: Response) {
                 response.use {
@@ -73,6 +81,7 @@ class CmApi {
                 countDownLatch.countDown()
             }
         })
+        // Await execution of either OnResponse or OnFailure to ensure the request finished before returning.
         countDownLatch.await()
         return mealItem
     }
@@ -83,7 +92,7 @@ fun btmRescale(bitmap: Bitmap): Bitmap {
     return Bitmap.createScaledBitmap(bitmap, 544, 544, true)
 }
 
-// bitmap to byte array
+// Bitmap to byte array
 fun btmpToByteArr(bitmap: Bitmap): ByteArray{
     val stream = ByteArrayOutputStream()
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)

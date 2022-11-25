@@ -101,15 +101,17 @@ class DashboardActivity : AppCompatActivity() {
         rv_listOfFoods = findViewById(R.id.rv_listOfFoods)
 
 
-
+        // Get data from daily nutrition data and user settings from firestore db, calculate the daily intake and update UI components.
         val df = DecimalFormat("#.##")
         db.collection(userId).get().addOnSuccessListener { documents ->
+            // Initialize variables for total daily intake
             var proteinTot = 0.0
             var caloriesTot = 0.0
             var fatTot = 0.0
             var carbsTot = 0.0
             var intakeQuan = 0.0
             for (document in documents) {
+                // For each document with today's data, add to total intake. Also add the item to and ArrayList used to display daily food items.
                 if(document.get("date") == getDate()) {
                     intakeQuan = document.get("intakeQuan").toString().toDouble()
                     proteinTot += document.get("protein").toString().toDouble() * intakeQuan
@@ -117,16 +119,16 @@ class DashboardActivity : AppCompatActivity() {
                     fatTot += document.get("fat").toString().toDouble() * intakeQuan
                     carbsTot += document.get("carbohydrates").toString().toDouble() * intakeQuan
                     list.add(document.toObject(MealItem::class.java))
-
                 }
             }
 
+            // Get user settings from firestore db (preferred daily intake) and update UI.
             db.collection(userId).document("userSettings").get().addOnSuccessListener { document ->
-
                 val CALORIES: Int
                 val PROTEIN: Int
                 val FATS: Int
                 val CARBS: Int
+                // If user already defined preferred intake, get those or else set some default values.
                 if(document.exists()) {
                     CALORIES = document.get("caloriesGoal").toString().toInt()
                     PROTEIN = document.get("proteinGoal").toString().toInt()
@@ -205,20 +207,21 @@ class DashboardActivity : AppCompatActivity() {
             true
         }
 
-        //set the username as userId
+        //set the username ui text as authenticated users email address.
         val username = navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text
         if(username != null){
             navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text = auth.currentUser!!.email
         }
 
 
-
+        // Check and request permissions to use camera if needed.
         if(ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,
                 arrayOf<String>(Manifest.permission.CAMERA), 101)
         }
 
+        // Open activity to take a picture with the camera.
         btn_camera.setOnClickListener(View.OnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, 101)

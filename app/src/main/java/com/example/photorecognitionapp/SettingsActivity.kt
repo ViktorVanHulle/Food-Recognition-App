@@ -43,11 +43,11 @@ class SettingsActivity : AppCompatActivity()  {
 
     private fun clickListener(){
 
+        // Initialize button amd userSettings object.
         val btn_setNutrients = findViewById<Button>(R.id.btn_setNutrients)
-
-
         val userSettings = UserSettings()
 
+        // Get user settings and add data to userSettings object, else set default values.
         db.collection(userId).document("userSettings").get().addOnSuccessListener { document ->
             if(document.exists()) {
                 userSettings.caloriesGoal = document.get("caloriesGoal").toString().toInt()
@@ -59,14 +59,15 @@ class SettingsActivity : AppCompatActivity()  {
                 userSettings.fatGoal = 60
                 userSettings.carbsGoal = 215
                 userSettings.proteinGoal = 50
-
             }
+            // Set text fields data
             amount_calories.setText(userSettings.caloriesGoal.toString())
             amount_fats.setText(userSettings.fatGoal.toString())
             amount_carbs.setText(userSettings.carbsGoal.toString())
             amount_protein.setText(userSettings.proteinGoal.toString())
         }
 
+        // Upon save button click, Update values in firestore
         btn_setNutrients.setOnClickListener {
             userSettings.caloriesGoal = amount_calories.text.toString().toInt()
             userSettings.proteinGoal = amount_protein.text.toString().toInt()
