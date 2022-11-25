@@ -73,6 +73,10 @@ class SettingsActivity : AppCompatActivity()  {
             userSettings.fatGoal = amount_fats.text.toString().toInt()
             userSettings.carbsGoal = amount_carbs.text.toString().toInt()
             cloudData.addUserSettings(userId, userSettings)
+
+            val intent = Intent(this, DashboardActivity::class.java)
+            intent.putExtra("userId", userId)
+            startActivity(intent)
         }
 
     }

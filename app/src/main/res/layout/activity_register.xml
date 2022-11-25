@@ -43,22 +43,25 @@ tools:context=".RegisterActivity">
         app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress" />
 
     <!-- Password warning message -->
+
+    <!-- Login button -->
+
     <TextView
         android:id="@+id/textViewPassword"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_weight="10"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="10"
         android:text="Password must be at least 6 characters"
         android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
         app:layout_constraintStart_toStartOf="@+id/editTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"/>
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <!-- Login button -->
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"

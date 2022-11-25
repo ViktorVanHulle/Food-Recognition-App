@@ -208,7 +208,8 @@ class DashboardActivity : AppCompatActivity() {
         //set the username as userId
         val username = navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text
         if(username != null){
-            navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text = auth.currentUser!!.email
+            navView.getHeaderView(0).findViewById<TextView>(R.id.user_name).text =
+                auth.currentUser!!.email
         }
 
 
